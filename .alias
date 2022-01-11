@@ -1,0 +1,12 @@
+alias ls='ls --color=auto'
+alias la='ls --color=auto -la'
+# git
+alias gst='git status'
+alias gp='git push'
+alias 'gpf!'='git push --force'
+alias gpr='git pull --rebase'
+alias gapa='git add --patch'
+alias gc='git commit -v'
+alias 'gc!'='git commit -v --amend'
+alias glods='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'\'' --date=short'
+alias gd='git diff'
