@@ -5,10 +5,12 @@ Plug 'ourigen/skyline.vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-sensible'
+Plug 'romainl/vim-qf'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'rhysd/vim-clang-format'
 Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 Plug 'itspriddle/vim-shellcheck'
+Plug 'mileszs/ack.vim'
 
 call plug#end()
 
@@ -57,6 +59,9 @@ augroup filetypedetect
     au! BufWritePre *.sh ShellCheck! -x
 augroup END
 
+" configure ack to use ag
+let g:ackprg = 'ag --vimgrep'
+
 " save buffer
 nnoremap <Leader>s :w<CR>
 
@@ -87,14 +92,18 @@ nnoremap <Leader><Tab> :bprev<CR>
 
 " leader key twice to cycle between two open buffers
 nnoremap <Leader><Leader> <C-^>
-nnoremap <silent> <C-h> :call WinMove('h')<cr>
-nnoremap <silent> <C-j> :call WinMove('j')<cr>
-nnoremap <silent> <C-k> :call WinMove('k')<cr>
-nnoremap <silent> <C-l> :call WinMove('l')<cr>
+nnoremap <silent> <C-h> :call WinMove('h')<CR>
+nnoremap <silent> <C-j> :call WinMove('j')<CR>
+nnoremap <silent> <C-k> :call WinMove('k')<CR>
+nnoremap <silent> <C-l> :call WinMove('l')<CR>
 
 " f3 to find file in path
 nnoremap <F3> :find<Space>
 
+" find occurrences of pattern in path
+nnoremap <Leader>a :silent Ack!<Space><C-R><C-W><CR>
+
+" move to/create windows
 function! WinMove(key)
     let t:curwin = winnr()
     exec "wincmd ".a:key
