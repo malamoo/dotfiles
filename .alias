@@ -1,5 +1,6 @@
 alias ls='ls --color=auto'
 alias la='ls --color=auto -la'
+alias mv='mv -iv'
 # git
 alias gst='git status'
 alias gp='git push'

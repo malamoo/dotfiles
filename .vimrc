@@ -6,11 +6,11 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-sensible'
 Plug 'romainl/vim-qf'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'rhysd/vim-clang-format'
-Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
-Plug 'itspriddle/vim-shellcheck'
-Plug 'mileszs/ack.vim'
+" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'rhysd/vim-clang-format'
+" Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+" Plug 'mileszs/ack.vim'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -37,7 +37,7 @@ let &colorcolumn="79,".join(range(80,999),",")
 set textwidth=80
 
 " strip whitespace on write
-autocmd BufWritePre * :%s/\s\+$//e
+" autocmd BufWritePre * :%s/\s\+$//e
 
 " configure everforest colorscheme
 colorscheme everforest
@@ -48,19 +48,32 @@ let g:everforest_background = 'soft'
 let g:skyline_wordcount = 1
 
 " configure clang format
-autocmd FileType c ClangFormatAutoEnable
+" autocmd FileType c ClangFormatAutoEnable
 
 " configure shfmt
-let g:shfmt_extra_args = '-i 4'
-let g:shfmt_fmt_on_save = 1
+" let g:shfmt_extra_args = '-i 4'
+" let g:shfmt_fmt_on_save = 1
 
 " configure shellcheck
-augroup filetypedetect
-    au! BufWritePre *.sh ShellCheck! -x
-augroup END
+" augroup filetypedetect
+"     au! BufWritePre *.sh ShellCheck! -x
+" augroup END
 
 " configure ack to use ag
-let g:ackprg = 'ag --vimgrep'
+" let g:ackprg = 'ag --vimgrep'
+
+" configure ALE to use these fixers
+let g:ale_fixers = {
+\   'c': ['clangtidy', 'clang-format'],
+\   'sh': ['shfmt'],
+\}
+let g:ale_fix_on_save = 1
+
+" f2 to find file symbol
+nnoremap <C-]> :ALEGoToDefinition<CR>
+
+" f2 to find file symbol
+nnoremap <F2> :ALESymbolSearch<Space>
 
 " save buffer
 nnoremap <Leader>s :w<CR>
@@ -101,7 +114,7 @@ nnoremap <silent> <C-l> :call WinMove('l')<CR>
 nnoremap <F3> :find<Space>
 
 " find occurrences of pattern in path
-nnoremap <Leader>a :silent Ack!<Space><C-R><C-W><CR>
+" nnoremap <Leader>a :silent Ack!<Space><C-R><C-W><CR>
 
 " move to/create windows
 function! WinMove(key)
@@ -118,9 +131,9 @@ function! WinMove(key)
 endfunction
 
 " recognize *.h filetype as C
-augroup filetypedetect
-    au! BufRead,BufNewFile *.h setfiletype c
-augroup END
+" augroup filetypedetect
+"     au! BufRead,BufNewFile *.h setfiletype c
+" augroup END
 
 " enable auto completion menu after pressing tab
 set wildmenu
